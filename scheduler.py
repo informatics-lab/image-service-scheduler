@@ -54,7 +54,10 @@ def getTHREDDSJob(queue_name="thredds_queue", visibility_timeout=60):
     except IndexError:
         raise NoJobsError()
 
-    return Job(message.get_body())
+    job = Job(message.get_body())
+    queue.delete_message(message)
+    
+    return job
 
 
 def postImgSvcJobs(msgs, queue_name="image_service_queue"):
