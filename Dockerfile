@@ -1,4 +1,4 @@
-FROM niallrobinson/iris
+FROM quay.io/niallrobinson/iris
 
 MAINTAINER niall.robinson@informaticslab.co.uk
 
