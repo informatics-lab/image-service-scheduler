@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:14.04
 
 MAINTAINER niall.robinson@informaticslab.co.uk
 
@@ -9,8 +9,6 @@ RUN apt-get install -y python-pip
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
-MAINTAINER niall.robinson@informaticslab.co.uk
 
 RUN apt-get update && apt-get install -y wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1
