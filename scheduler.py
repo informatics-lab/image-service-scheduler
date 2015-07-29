@@ -25,13 +25,13 @@ class Job(object):
         return [t for in d.coord("time")]
 
     def getImgSvcJobMsgs(self):
-        profs = manifest.getProfiles(self.model, self.variable)
+        profile_names = manifest.getProfiles(self.model, self.variable)
         msgs = []
-        for prof in profs:
+        for profile_name in profile_names:
             times = self.getTimes()
             for i, time in enumerate(times):
                 msg = {"data_file": self.data_file,
-                       "profile": prof,
+                       "profile_name": profile_name,
                        "time_step": time,
                        "frame": i,
                        "nframes": len(times)}
