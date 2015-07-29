@@ -4,8 +4,8 @@ import boto
 import iris
 
 import sys
-sys.path.append(".")
-import config
+sys.path.append("./config")
+import manifest
 
 class Job(object):
     """ message should be URI to OpenDAP """
@@ -25,7 +25,7 @@ class Job(object):
         return [t for in d.coord("time")]
 
     def getImgSvcJobMsgs(self):
-        profs = config.getProfiles(self.model, self.variable)
+        profs = manifest.getProfiles(self.model, self.variable)
         msgs = []
         for prof in profs:
             times = self.getTimes()
