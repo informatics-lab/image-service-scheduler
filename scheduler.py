@@ -22,7 +22,7 @@ class Job(object):
 
     def getTimes(self):
         d = iris.load_cube(self.open_dap)
-        return [t for in d.coord("time")]
+        return d.coord("time").points
 
     def getImgSvcJobMsgs(self):
         profile_names = manifest.getProfiles(self.model, self.variable)
