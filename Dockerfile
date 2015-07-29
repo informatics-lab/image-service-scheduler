@@ -11,4 +11,4 @@ ADD [^.]* ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD scheduler.py
+CMD ./scheduler.py
