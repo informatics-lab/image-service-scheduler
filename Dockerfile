@@ -1,8 +1,7 @@
 FROM quay.io/informaticslab/iris
 MAINTAINER niall.robinson@informaticslab.co.uk
 
-RUN apt-get update
- && apt-get install -y git
+RUN apt-get update && apt-get install -y git
 
 RUN git clone https://github.com/met-office-lab/cloud-processing-config.git config
 
