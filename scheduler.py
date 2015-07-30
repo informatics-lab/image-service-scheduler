@@ -4,8 +4,8 @@ import boto
 import iris
 
 import sys
-sys.path.append("./config")
-import manifest
+sys.path.append(".")
+from config import manifest
 
 class Job(object):
     """ message should be URI to OpenDAP """
