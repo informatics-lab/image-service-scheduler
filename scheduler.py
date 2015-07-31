@@ -61,6 +61,7 @@ def getQueue(queue_name):
 
 def getTHREDDSJob(queue, visibility_timeout=60):
     messages = queue.get_messages(1, visibility_timeout=visibility_timeout)
+    import pdb; pdb.set_trace()
     try:
         message = messages[0]
     except IndexError:
@@ -75,7 +76,6 @@ def postImgSvcJobs(msgs, queue):
     nframes = len(msgs)
     for i, msg in enumerate(msgs):
         print "Adding " + str(msg) + " to the img svc job queue"
-        import pdb; pdb.set_trace()
         m = boto.sqs.jsonmessage.JSONMessage()
         m.set_body(msg)
         queue.write(m)
@@ -88,4 +88,4 @@ if __name__ == "__main__":
     job = getTHREDDSJob(thredds_queue)
 
     postImgSvcJobs(job.getImgSvcJobMsgs(), image_service_queue)
-    # thredds_queue.delete_message(job.message)
+    thredds_queue.delete_message(job.message)
