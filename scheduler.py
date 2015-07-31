@@ -13,8 +13,9 @@ from config import manifest
 class Job(object):
     """ message should be URI to OpenDAP """
     def __init__(self, message):
-        self.open_dap = message
-        self.data_file = message.split("/")[-1]
+        body = message.get_body()
+        self.open_dap = body
+        self.data_file = body.split("/")[-1]
         self.model = self.data_file.split("_")[0]
         self.variable = "_".join(self.data_file.split("_")[1:-1])
         self.timestamp = self.data_file.split("_")[-1].split(".")[0]
@@ -61,13 +62,12 @@ def getQueue(queue_name):
 
 def getTHREDDSJob(queue, visibility_timeout=60):
     messages = queue.get_messages(1, visibility_timeout=visibility_timeout)
-    import pdb; pdb.set_trace()
     try:
         message = messages[0]
     except IndexError:
         raise NoJobsError()
 
-    job = Job(message.get_body())
+    job = Job(message)
     
     return job
 
