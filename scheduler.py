@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import boto
+import boto.sqs
+import os
 import iris
 
 import sys
