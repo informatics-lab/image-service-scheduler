@@ -89,3 +89,5 @@ if __name__ == "__main__":
 
     postImgSvcJobs(job.getImgSvcJobMsgs(), image_service_queue)
     thredds_queue.delete_message(job.message)
+
+    sys.exit()
