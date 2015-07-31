@@ -36,6 +36,9 @@ class Job(object):
             times = self.getTimes()
             for i, time in enumerate(times):
                 msg = {"data_file": self.data_file,
+                       "open_dap": self.open_dap,
+                       "variable": self.variable,
+                       "model": self.model,
                        "profile_name": profile_name,
                        "time_step": time,
                        "frame": i,
