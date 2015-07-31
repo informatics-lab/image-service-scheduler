@@ -25,7 +25,6 @@ class Job(object):
 
     def getTimes(self, tcoordname="time"):
         d = iris.load_cube(self.open_dap)
-        import pdb; pdb.set_trace()
         with iris.FUTURE.context(cell_datetime_objects=True):
             return [t.point.isoformat() for t in d.coord(tcoordname).cells()]
 
@@ -61,14 +60,13 @@ def getQueue(queue_name):
 
 
 def getTHREDDSJob(queue, visibility_timeout=60):
-    messages = queue.get_messages(1, visibility_timeout=60)
+    messages = queue.get_messages(1, visibility_timeout=visibility_timeout)
     try:
         message = messages[0]
     except IndexError:
         raise NoJobsError()
 
     job = Job(message.get_body())
-    queue.delete_message(message)
     
     return job
 
@@ -77,7 +75,6 @@ def postImgSvcJobs(msgs, queue):
     nframes = len(msgs)
     for i, msg in enumerate(msgs):
         print "Adding " + str(msg) + " to the img svc job queue"
-        # m = boto.sqs.message.Message()
         import pdb; pdb.set_trace()
         m = boto.sqs.jsonmessage.JSONMessage()
         m.set_body(msg)
@@ -91,3 +88,4 @@ if __name__ == "__main__":
     job = getTHREDDSJob(thredds_queue)
 
     postImgSvcJobs(job.getImgSvcJobMsgs(), image_service_queue)
+    # thredds_queue.delete_message(job.message)
