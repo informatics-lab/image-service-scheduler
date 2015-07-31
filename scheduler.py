@@ -2,6 +2,7 @@
 
 import boto
 import boto.sqs
+import boto.sqs.jsonmessage
 import os
 import iris
 
@@ -22,9 +23,11 @@ class Job(object):
     def __str__(self):
         self.data_file
 
-    def getTimes(self):
+    def getTimes(self, tcoordname="time"):
         d = iris.load_cube(self.open_dap)
-        return d.coord("time").points
+        import pdb; pdb.set_trace()
+        with iris.FUTURE.context(cell_datetime_objects=True):
+            return [t.point.isoformat() for t in d.coord(tcoordname).cells()]
 
     def getImgSvcJobMsgs(self):
         profile_names = manifest.getProfiles(self.model, self.variable)
@@ -58,7 +61,7 @@ def getQueue(queue_name):
 
 
 def getTHREDDSJob(queue, visibility_timeout=60):
-    messages = queue.get_messages(visibility_timeout, number_messages=1)
+    messages = queue.get_messages(1, visibility_timeout=60)
     try:
         message = messages[0]
     except IndexError:
@@ -73,9 +76,11 @@ def getTHREDDSJob(queue, visibility_timeout=60):
 def postImgSvcJobs(msgs, queue):
     nframes = len(msgs)
     for i, msg in enumerate(msgs):
-        print "Adding " + msg + " to the img svc job queue"
-        m = boto.sqs.message.Message()
-        m.message_attributes(msg)
+        print "Adding " + str(msg) + " to the img svc job queue"
+        # m = boto.sqs.message.Message()
+        import pdb; pdb.set_trace()
+        m = boto.sqs.jsonmessage.JSONMessage()
+        m.set_body(msg)
         queue.write(m)
 
 
