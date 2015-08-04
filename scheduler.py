@@ -85,12 +85,12 @@ def postImgSvcJobs(msgs, queue):
 
 
 if __name__ == "__main__":
-    thredds_queue = getQueue("thredds_queue")
+    image_service_scheduler_queue = getQueue("image_service_scheduler_queue")
     image_service_queue = getQueue("image_service_queue")
 
-    job = getTHREDDSJob(thredds_queue)
+    job = getTHREDDSJob(image_service_scheduler_queue)
 
     postImgSvcJobs(job.getImgSvcJobMsgs(), image_service_queue)
-    thredds_queue.delete_message(job.message)
+    image_service_scheduler_queue.delete_message(job.message)
 
     sys.exit()
