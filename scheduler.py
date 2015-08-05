@@ -5,6 +5,7 @@ import boto.sqs
 import boto.sqs.jsonmessage
 import os
 import iris
+import json
 
 import sys
 sys.path.append(".")
@@ -13,7 +14,7 @@ from config import manifest
 class Job(object):
     """ message should be URI to OpenDAP """
     def __init__(self, message):
-        body = message.get_body()
+        body = json.loads(message.get_body())["Message"]
         self.open_dap = body
         self.data_file = body.split("/")[-1]
         self.model = self.data_file.split("_")[0]
