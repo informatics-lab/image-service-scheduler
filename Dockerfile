@@ -1,4 +1,4 @@
-FROM quay.io/informatics_lab/docker-iris
+FROM quay.io/informaticslab/iris
 MAINTAINER niall.robinson@informaticslab.co.uk
 
 RUN apt-get update && apt-get install -y git
