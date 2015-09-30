@@ -8,7 +8,6 @@ RUN git clone https://github.com/met-office-lab/cloud-processing-config.git conf
 ADD requirements.txt requirements.txt
 ADD scheduler.py scheduler.py
 
-RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 CMD ./scheduler.py
