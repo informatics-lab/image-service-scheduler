@@ -18,8 +18,8 @@ class Job(object):
         self.open_dap = body
         self.data_file = body.split("/")[-1]
         self.model = self.data_file.split("_")[0]
-        self.variable = "_".join(self.data_file.split("_")[1:-1])
-        self.timestamp = self.data_file.split("_")[-1].split(".")[0]
+        self.variable = "_".join(self.data_file.split("_")[1:2])
+        self.timestamp = self.data_file.split("_")[2]
         self.message = message
     
     def __str__(self):
