@@ -17,11 +17,13 @@ class Job(object):
         body = json.loads(message.get_body())["Message"]
         self.open_dap = body
         self.data_file = body.split("/")[-1]
-        self.model = self.data_file.split("_")[0]
-        self.variable = "_".join(self.data_file.split("_")[1:-4])
-        self.timestamp = self.data_file.split("_")[-3]
-        self.profile_name = self.data_file.split("_")[-2]
+        info = manifest.runnames[self.data_file.split("_")[0]]
+        self.model = info["model"]
+        self.variable = "_".join(self.data_file.split("_")[1:-3])
+        self.timestamp = self.data_file.split("_")[-2]
+        self.profile_name = info["profile"]
         self.message = message
+        self.ntimes = info["ntimes"]
     
     def __str__(self):
         self.data_file
@@ -42,8 +44,8 @@ class Job(object):
                    "model": self.model,
                    "profile_name": self.profile_name,
                    "time_step": time,
-                   "frame": i,
-                   "nframes": len(times)}
+                   "frame": int(self.data_file[-8:-6]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
+                   "nframes": self.ntimes}
             msgs.append(msg)
 
         return msgs
