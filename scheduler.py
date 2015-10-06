@@ -18,8 +18,9 @@ class Job(object):
         self.open_dap = body
         self.data_file = body.split("/")[-1]
         self.model = self.data_file.split("_")[0]
-        self.variable = "_".join(self.data_file.split("_")[1:-3])
-        self.timestamp = self.data_file.split("_")[-2]
+        self.variable = "_".join(self.data_file.split("_")[1:-4])
+        self.timestamp = self.data_file.split("_")[-3]
+        self.profile_name = self.data_file.split("_")[-2]
         self.message = message
     
     def __str__(self):
@@ -31,20 +32,19 @@ class Job(object):
             return [t.point.isoformat() for t in d.coord(tcoordname).cells()]
 
     def getImgSvcJobMsgs(self):
-        profile_names = manifest.getProfiles(self.model, self.variable)
         msgs = []
-        for profile_name in profile_names:
-            times = self.getTimes()
-            for i, time in enumerate(times):
-                msg = {"data_file": self.data_file,
-                       "open_dap": self.open_dap,
-                       "variable": self.variable,
-                       "model": self.model,
-                       "profile_name": profile_name,
-                       "time_step": time,
-                       "frame": i,
-                       "nframes": len(times)}
-                msgs.append(msg)
+
+        times = self.getTimes()
+        for i, time in enumerate(times):
+            msg = {"data_file": self.data_file,
+                   "open_dap": self.open_dap,
+                   "variable": self.variable,
+                   "model": self.model,
+                   "profile_name": self.profile_name,
+                   "time_step": time,
+                   "frame": i,
+                   "nframes": len(times)}
+            msgs.append(msg)
 
         return msgs
 
