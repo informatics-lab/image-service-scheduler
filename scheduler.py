@@ -20,7 +20,7 @@ class Job(object):
         self.model = self.data_file.split("_")[0]
         self.variable = "_".join(self.data_file.split("_")[1:-4])
         self.timestamp = self.data_file.split("_")[-3]
-        self.profile = self.data_file.split("_")[-2]
+        self.profile_name = self.data_file.split("_")[-2]
         self.message = message
     
     def __str__(self):
