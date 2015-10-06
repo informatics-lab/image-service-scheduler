@@ -20,14 +20,14 @@ class Job(object):
         self.model = self.data_file.split("_")[0]
         self.variable = "_".join(self.data_file.split("_")[1:-4])
         self.timestamp = self.data_file.split("_")[-3]
-        self.profile_name = self.data_file.split("_")[-2]
+        self.profile = self.data_file.split("_")[-2]
         self.message = message
     
     def __str__(self):
         self.data_file
 
     def getTimes(self, tcoordname="time"):
-        d = iris.load_cube(self.open_dap)
+        d = iris.load_cube(os.path.join(os.getenv("DATA_DIR"), self.data_file))
         with iris.FUTURE.context(cell_datetime_objects=True):
             return [t.point.isoformat() for t in d.coord(tcoordname).cells()]
 
