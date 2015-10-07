@@ -13,7 +13,7 @@ from config import manifest
 
 class Job(object):
     """ message should be URI to OpenDAP """
-    def __init__(self, message):
+    def __init__(self,  ):
         body = json.loads(message.get_body())["Message"]
         self.open_dap = body
         self.data_file = body.split("/")[-1]
@@ -44,7 +44,7 @@ class Job(object):
                    "model": self.model,
                    "profile_name": self.profile_name,
                    "time_step": time,
-                   "frame": int(self.data_file[-8:-6]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
+                   "frame": int(self.data_file[-5:-3]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
                    "nframes": self.ntimes}
             msgs.append(msg)
 
