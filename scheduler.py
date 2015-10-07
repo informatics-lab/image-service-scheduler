@@ -75,6 +75,8 @@ def getTHREDDSJob(queue, visibility_timeout=60):
     try:
         message = messages[0]
     except IndexError:
+        print "No jobs, sleeping for 5s"
+        time.sleep(5)
         raise NoJobsError()
 
     job = Job(message)
