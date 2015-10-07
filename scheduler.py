@@ -88,6 +88,7 @@ def postImgSvcJobs(msgs, queue):
 
 
 if __name__ == "__main__":
+    print "RUNNING"
     image_service_scheduler_queue = getQueue("image_service_scheduler_queue")
     image_service_queue = getQueue("image_service_queue")
 
