@@ -67,6 +67,7 @@ def getQueue(queue_name):
 
 
 def getTHREDDSJob(queue, visibility_timeout=60):
+    print "Getting job"
     messages = queue.get_messages(num_messages=1, visibility_timeout=visibility_timeout)
     try:
         message = messages[0]
@@ -88,7 +89,6 @@ def postImgSvcJobs(msgs, queue):
 
 
 if __name__ == "__main__":
-    print "RUNNING"
     image_service_scheduler_queue = getQueue("image_service_scheduler_queue")
     image_service_queue = getQueue("image_service_queue")
 
