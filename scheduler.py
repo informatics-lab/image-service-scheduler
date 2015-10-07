@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 
 import boto
 import boto.sqs
@@ -108,8 +108,9 @@ if __name__ == "__main__":
     postImgSvcJobs(msgs, image_service_queue)
     image_service_scheduler_queue.delete_message(job.message)
 
-    if any([msg["frame"] == 0 for msg in msgs]):
-        video_service_queue = getQueue("video_service_queue")
-        postVidSvcJob(msg, video_service_queue)
+    for msg in msgs:
+        if msg["frame"] == 0:
+            video_service_queue = getQueue("video_service_queue")
+            postVidSvcJob(msg, video_service_queue)
 
     sys.exit()
