@@ -39,7 +39,7 @@ class Job(object):
         msgs = []
 
         times, forecast_periods = self.getTimes()
-        for time, forecast_period in zip(times, forecast_period):
+        for time, forecast_period in zip(times, forecast_periods):
             msg = {"data_file": self.data_file,
                    "open_dap": self.open_dap,
                    "variable": self.variable,
