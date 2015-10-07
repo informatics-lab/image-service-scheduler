@@ -6,6 +6,7 @@ import boto.sqs.jsonmessage
 import os
 import iris
 import json
+import time
 
 import sys
 sys.path.append(".")
