@@ -31,20 +31,22 @@ class Job(object):
     def getTimes(self, tcoordname="time"):
         d = iris.load_cube(os.path.join(os.getenv("DATA_DIR"), self.data_file))
         with iris.FUTURE.context(cell_datetime_objects=True):
-            return [t.point.isoformat() for t in d.coord(tcoordname).cells()]
+            time_values = [t.point.isoformat() for t in d.coord(tcoordname).cells()]
+            forecast_periods = d.coord("forecast_period").points
+            return (time_values, forecast_periods)
 
     def getImgSvcJobMsgs(self):
         msgs = []
 
-        times = self.getTimes()
-        for i, time in enumerate(times):
+        times, forecast_periods = self.getTimes()
+        for time, forecast_period in zip(times, forecast_period):
             msg = {"data_file": self.data_file,
                    "open_dap": self.open_dap,
                    "variable": self.variable,
                    "model": self.model,
                    "profile_name": self.profile_name,
                    "time_step": time,
-                   "frame": int(self.data_file[-5:-3]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
+                   "frame": forecast_period,
                    "nframes": self.nframes}
             msgs.append(msg)
 
@@ -88,13 +90,26 @@ def postImgSvcJobs(msgs, queue):
         queue.write(m)
 
 
+def postVidSvcJob(msg, queue):
+    nframes = len(msg)
+    print "Adding " + str(msg) + " to the vid svc job queue"
+    m = boto.sqs.jsonmessage.JSONMessage()
+    m.set_body(msg)
+    queue.write(m)
+
+
 if __name__ == "__main__":
     image_service_scheduler_queue = getQueue("image_service_scheduler_queue")
     image_service_queue = getQueue("image_service_queue")
 
     job = getTHREDDSJob(image_service_scheduler_queue)
 
-    postImgSvcJobs(job.getImgSvcJobMsgs(), image_service_queue)
+    msgs = job.getImgSvcJobMsgs()
+    postImgSvcJobs(msgs, image_service_queue)
     image_service_scheduler_queue.delete_message(job.message)
+
+    if any([msg["frame"] == 0 for msg in msgs]):
+        video_service_queue = getQueue("video_service_queue")
+        postVidSvcJob(msg, video_service_queue)
 
     sys.exit()
