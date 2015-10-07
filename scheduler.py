@@ -67,7 +67,7 @@ def getQueue(queue_name):
 
 
 def getTHREDDSJob(queue, visibility_timeout=60):
-    messages = queue.get_messages(1, visibility_timeout=visibility_timeout)
+    messages = queue.get_messages(num_messages=1, visibility_timeout=visibility_timeout)
     try:
         message = messages[0]
     except IndexError:
