@@ -23,7 +23,7 @@ class Job(object):
         self.timestamp = self.data_file.split("_")[-2]
         self.profile_name = info["profile"]
         self.message = message
-        self.ntimes = info["ntimes"]
+        self.nframes = info["nframes"]
     
     def __str__(self):
         self.data_file
@@ -45,7 +45,7 @@ class Job(object):
                    "profile_name": self.profile_name,
                    "time_step": time,
                    "frame": int(self.data_file[-5:-3]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
-                   "nframes": self.ntimes}
+                   "nframes": self.nframes}
             msgs.append(msg)
 
         return msgs
