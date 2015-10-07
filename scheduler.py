@@ -113,4 +113,6 @@ if __name__ == "__main__":
             video_service_queue = getQueue("video_service_queue")
             postVidSvcJob(msg, video_service_queue)
 
+    print "Done, sleeping for 5s"
+    time.sleep(5)
     sys.exit()
