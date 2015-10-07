@@ -45,7 +45,7 @@ class Job(object):
                    "profile_name": self.profile_name,
                    "time_step": time,
                    "frame": int(self.data_file[-5:-3]) - 1 + i, # bespoke for umqvaa HACK HACKITY HACK
-                   "nframes": self.nframes;}
+                   "nframes": self.nframes}
             msgs.append(msg)
 
         return msgs
