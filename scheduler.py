@@ -20,7 +20,7 @@ class Job(object):
         self.data_file = body.split("/")[-1]
         info = manifest.runnames[self.data_file.split("_")[0]]
         self.model = info["model"]
-        self.variable = "_".join(self.data_file.split("_")[1:-3])
+        self.variable = "_".join(self.data_file.split("_")[1:-2])
         self.timestamp = self.data_file.split("_")[-2]
         self.profile_name = info["profile"]
         self.message = message
