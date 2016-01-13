@@ -110,6 +110,11 @@ if __name__ == "__main__":
     msgs = job.getImgSvcJobMsgs()
     postImgSvcJobs(msgs, image_service_queue)
     image_service_scheduler_queue.delete_message(job.message)
+    
+    print "Sleeping while the image service updates latest in the data service before posting the video jobs."
+    # The message should probable include the forecast reference time from the netCDF file and the video service should
+    # query the data service for that rather than latest. Then we wouldn't have to sleep. Ho hum!
+    time.sleep(60)
 
     for msg in msgs:
         if msg["frame"] == 0:
