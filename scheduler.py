@@ -112,7 +112,7 @@ if __name__ == "__main__":
     image_service_scheduler_queue.delete_message(job.message)
 
     for msg in msgs:
-        if msg["frame"] == 0:
+        if msg["frame"] == 1: # 1 not 0 as possibly not getting the assimilated observations any more
             print "Sleeping while the image service updates latest in the data service before posting the video jobs."
             # The message should probable include the forecast reference time from the netCDF file and the video service should
             # query the data service for that rather than latest. Then we wouldn't have to sleep. Ho hum!
