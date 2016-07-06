@@ -1,4 +1,4 @@
-# image-service-scheduler
+# image-service-scheduler [![Docker Repository on Quay](https://quay.io/repository/informaticslab/image-service-scheduler/status "Docker Repository on Quay")](https://quay.io/repository/informaticslab/image-service-scheduler)
 Micro service to schedule image service jobs
 
 ## Environment variables
